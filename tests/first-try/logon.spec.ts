@@ -1,9 +1,18 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, Locator } from "@playwright/test";
 
-test("Logon page can be opened", async ({ page }) => {
-  await page.goto("http://localhost:5173/login");
+test.describe("Logon page", () => {
+  let registerButton: Locator;
 
-  await page.getByRole("link", { name: "Create an account" }).click();
+  test.beforeEach(async ({ page }) => {
+    await page.goto("http://localhost:5173/login");
 
-  await page.getByRole("button", { name: "Register" }).isDisabled();
+    await page.getByRole("link", { name: "Create an account" }).click();
+
+    registerButton = await page.getByRole("button", { name: "Register" });
+    await registerButton.isVisible();
+  });
+
+  test("Logon page can be opened", async ({ page }) => {
+    await expect(registerButton).toBeDisabled();
+  });
 });
