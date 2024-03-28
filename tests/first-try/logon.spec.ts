@@ -15,4 +15,13 @@ test.describe("Logon page", () => {
   test("Logon page can be opened", async ({ page }) => {
     await expect(registerButton).toBeDisabled();
   });
+
+  test("Register user successfully", async ({ page }) => {
+    await expect(registerButton).toBeDisabled();
+
+    await page.getByPlaceholder("Username").fill("test20240328");
+
+    // this step will be failed
+    await page.getByPlaceholder("Email").fill("test20240328@gmail.com");
+  });
 });
